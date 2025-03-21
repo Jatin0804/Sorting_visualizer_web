@@ -3,6 +3,14 @@ class BaseSort:
         self.steps = []
         self.comparisons = 0
         self.swaps = 0
+        
+        # Time complexity information
+        self.complexity = {
+            'best': 'O(n)',
+            'average': 'O(n)',
+            'worst': 'O(n)',
+            'space': 'O(1)'
+        }
 
     def sort(self, arr):
         """
@@ -28,6 +36,17 @@ class BaseSort:
         """
         self.swaps += 1
 
+    def compare(self, a, b):
+        self.comparisons += 1
+        return a < b
+
+    def swap(self, arr, i, j):
+        self.swaps += 1
+        arr[i], arr[j] = arr[j], arr[i]
+
+    def get_complexity(self):
+        return self.complexity
+
     def get_stats(self):
         """
         Get sorting statistics
@@ -35,5 +54,6 @@ class BaseSort:
         return {
             'steps': self.steps,
             'comparisons': self.comparisons,
-            'swaps': self.swaps
+            'swaps': self.swaps,
+            'complexity': self.complexity
         } 

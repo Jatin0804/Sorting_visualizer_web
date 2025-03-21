@@ -1,6 +1,15 @@
 from .base import BaseSort
 
 class ShellSort(BaseSort):
+    def __init__(self):
+        super().__init__()
+        self.complexity = {
+            'best': 'O(n log n)',
+            'average': 'O(n log n)',
+            'worst': 'O(n²)',
+            'space': 'O(1)'
+        }
+    
     def sort(self, arr):
         n = len(arr)
         # Start with a big gap, then reduce the gap

@@ -2,6 +2,15 @@ from .base import BaseSort
 import random
 
 class BogoSort(BaseSort):
+    def __init__(self):
+        super().__init__()
+        self.complexity = {
+            'best': 'O(n)',
+            'average': 'O((n+1)!)',
+            'worst': 'O(∞)',
+            'space': 'O(1)'
+        }
+    
     def is_sorted(self, arr):
         for i in range(len(arr) - 1):
             self.increment_comparisons()

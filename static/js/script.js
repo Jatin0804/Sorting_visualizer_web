@@ -10,6 +10,7 @@ class SortingVisualizer {
         this.swaps = 0;
         this.animationTimeout = null;
         this.maxValue = 500; // Maximum value in the array
+        this.complexities = {};
         
         // DOM elements
         this.container = document.getElementById('array-container');
@@ -21,15 +22,46 @@ class SortingVisualizer {
         this.sizeSlider = document.getElementById('size-slider');
         this.statsContainer = document.getElementById('stats-container');
         
+        // Complexity elements
+        this.bestCase = document.getElementById('best-case');
+        this.avgCase = document.getElementById('avg-case');
+        this.worstCase = document.getElementById('worst-case');
+        this.spaceCase = document.getElementById('space-case');
+        
         // Event listeners
         this.generateBtn.addEventListener('click', () => this.generateNewArray());
         this.startBtn.addEventListener('click', () => this.startSorting());
         this.stopBtn.addEventListener('click', () => this.stopSorting());
         this.speedSlider.addEventListener('input', (e) => this.updateSpeed(e.target.value));
         this.sizeSlider.addEventListener('input', (e) => this.updateArraySize(e.target.value));
+        this.algorithmSelect.addEventListener('change', () => this.updateComplexity());
         
-        // Initial array generation
-        this.generateNewArray();
+        // Initial setup
+        this.fetchComplexities().then(() => {
+            this.generateNewArray();
+            this.updateComplexity();
+        });
+    }
+    
+    async fetchComplexities() {
+        try {
+            const response = await fetch('/complexities');
+            this.complexities = await response.json();
+        } catch (error) {
+            console.error('Error fetching complexities:', error);
+        }
+    }
+    
+    updateComplexity() {
+        const algorithm = this.algorithmSelect.value;
+        const complexity = this.complexities[algorithm];
+        
+        if (complexity) {
+            this.bestCase.textContent = complexity.best;
+            this.avgCase.textContent = complexity.average;
+            this.worstCase.textContent = complexity.worst;
+            this.spaceCase.textContent = complexity.space;
+        }
     }
     
     async generateNewArray() {

@@ -100,6 +100,46 @@ input[type="range"] {
     z-index: 1;
 }
 
+.complexity-container {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.complexity-container h3 {
+    color: #1a73e8;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.complexity-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.complexity-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.complexity-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.complexity-value {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
 .array-container {
     display: flex;
     align-items: flex-end;
@@ -148,5 +188,11 @@ input[type="range"] {
     
     button {
         flex: 1;
+    }
+
+    .complexity-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
     }
 } 

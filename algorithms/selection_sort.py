@@ -1,6 +1,15 @@
 from .base import BaseSort
 
 class SelectionSort(BaseSort):
+    def __init__(self):
+        super().__init__()
+        self.complexity = {
+            'best': 'O(n²)',
+            'average': 'O(n²)',
+            'worst': 'O(n²)',
+            'space': 'O(1)'
+        }
+    
     def sort(self, arr):
         n = len(arr)
         for i in range(n):

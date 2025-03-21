@@ -41,6 +41,27 @@
             </div>
         </div>
         <div id="stats-container" class="stats-container"></div>
+        <div id="complexity-container" class="complexity-container">
+            <h3>Time Complexity</h3>
+            <div class="complexity-content">
+                <div class="complexity-item">
+                    <span class="complexity-label">Best Case:</span>
+                    <span class="complexity-value" id="best-case">O(n²)</span>
+                </div>
+                <div class="complexity-item">
+                    <span class="complexity-label">Average Case:</span>
+                    <span class="complexity-value" id="avg-case">O(n²)</span>
+                </div>
+                <div class="complexity-item">
+                    <span class="complexity-label">Worst Case:</span>
+                    <span class="complexity-value" id="worst-case">O(n²)</span>
+                </div>
+                <div class="complexity-item">
+                    <span class="complexity-label">Space Complexity:</span>
+                    <span class="complexity-value" id="space-case">O(1)</span>
+                </div>
+            </div>
+        </div>
         <div class="array-container" id="array-container"></div>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

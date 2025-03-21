@@ -1,18 +1,29 @@
 from .base import BaseSort
 
 class GnomeSort(BaseSort):
+    def __init__(self):
+        super().__init__()
+        self.complexity = {
+            'best': 'O(n)',
+            'average': 'O(n²)',
+            'worst': 'O(n²)',
+            'space': 'O(1)'
+        }
+    
     def sort(self, arr):
-        n = len(arr)
         index = 0
+        n = len(arr)
+        
         while index < n:
             if index == 0:
                 index += 1
-            self.increment_comparisons()
-            if arr[index] >= arr[index - 1]:
+                
+            if self.compare(arr[index], arr[index - 1]):
                 index += 1
             else:
-                arr[index], arr[index - 1] = arr[index - 1], arr[index]
-                self.increment_swaps()
-                self.add_step(arr)
+                self.swap(arr, index, index - 1)
                 index -= 1
-        return self.get_stats() 
+                
+            self.add_step(arr)
+            
+        return self.get_stats()

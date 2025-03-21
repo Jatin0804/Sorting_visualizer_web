@@ -1,6 +1,15 @@
 from .base import BaseSort
 
 class RadixSort(BaseSort):
+    def __init__(self):
+        super().__init__()
+        self.complexity = {
+            'best': 'O(d(n + k))',
+            'average': 'O(d(n + k))',
+            'worst': 'O(d(n + k))',
+            'space': 'O(n + k)'
+        }
+    
     def counting_sort_for_radix(self, arr, exp):
         n = len(arr)
         output = [0] * n

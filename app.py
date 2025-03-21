@@ -10,49 +10,54 @@ from algorithms import (
 
 app = Flask(__name__)
 
-def generate_array(size=50):
-    return [random.randint(10, 500) for _ in range(size)]
+# Create instances of all sorting algorithms
+sorting_algorithms = {
+    'bubble': BubbleSort(),
+    'selection': SelectionSort(),
+    'insertion': InsertionSort(),
+    'bogo': BogoSort(),
+    'comb': CombSort(),
+    'counting': CountingSort(),
+    'heap': HeapSort(),
+    'merge': MergeSort(),
+    'quick': QuickSort(),
+    'radix': RadixSort(),
+    'shell': ShellSort(),
+    'tim': TimSort(),
+    'gnome': GnomeSort(),
+    'cocktail': CocktailSort()
+}
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/generate-array')
-def get_array():
-    size = request.args.get('size', default=50, type=int)
-    return jsonify(generate_array(size))
+def generate_array():
+    size = int(request.args.get('size', 50))
+    array = [random.randint(1, 500) for _ in range(size)]
+    return jsonify(array)
 
 @app.route('/sort', methods=['POST'])
-def sort_array():
+def sort():
     data = request.get_json()
     array = data.get('array', [])
     algorithm = data.get('algorithm', 'bubble')
     
-    # Create the appropriate sorting algorithm instance
-    sorters = {
-        'bubble': BubbleSort,
-        'selection': SelectionSort,
-        'insertion': InsertionSort,
-        'bogo': BogoSort,
-        'comb': CombSort,
-        'counting': CountingSort,
-        'heap': HeapSort,
-        'merge': MergeSort,
-        'quick': QuickSort,
-        'radix': RadixSort,
-        'shell': ShellSort,
-        'tim': TimSort,
-        'gnome': GnomeSort,
-        'cocktail': CocktailSort
-    }
-    
-    if algorithm not in sorters:
+    if algorithm not in sorting_algorithms:
         return jsonify({'error': 'Invalid algorithm'}), 400
     
-    # Sort the array and get the results
-    sorter = sorters[algorithm]()
+    sorter = sorting_algorithms[algorithm]
     result = sorter.sort(array.copy())
     return jsonify(result)
+
+@app.route('/complexities')
+def get_complexities():
+    complexities = {
+        name: algorithm.get_complexity()
+        for name, algorithm in sorting_algorithms.items()
+    }
+    return jsonify(complexities)
 
 if __name__ == '__main__':
     app.run(debug=True) 

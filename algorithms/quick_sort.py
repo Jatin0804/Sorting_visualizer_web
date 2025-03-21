@@ -2,6 +2,15 @@ from .base import BaseSort
 import random
 
 class QuickSort(BaseSort):
+    def __init__(self):
+        super().__init__()
+        self.complexity = {
+            'best': 'O(n log n)',
+            'average': 'O(n log n)',
+            'worst': 'O(n²)',
+            'space': 'O(log n)'
+        }
+
     def partition(self, arr, low, high):
         # Choose random pivot
         pivot_idx = random.randint(low, high)
