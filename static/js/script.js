@@ -11,6 +11,7 @@ class SortingVisualizer {
         this.animationTimeout = null;
         this.maxValue = 500; // Maximum value in the array
         this.complexities = {};
+        this.backendUrl = 'http://sorting-visualizer-env.elasticbeanstalk.com';  // Update this with your Elastic Beanstalk URL
         
         // DOM elements
         this.container = document.getElementById('array-container');
@@ -45,8 +46,9 @@ class SortingVisualizer {
     
     async fetchComplexities() {
         try {
-            const response = await fetch('/complexities');
+            const response = await fetch(`${this.backendUrl}/complexities`);
             this.complexities = await response.json();
+            this.updateComplexityDisplay();
         } catch (error) {
             console.error('Error fetching complexities:', error);
         }
@@ -66,7 +68,7 @@ class SortingVisualizer {
     
     async generateNewArray() {
         try {
-            const response = await fetch(`/generate-array?size=${this.arraySize}`);
+            const response = await fetch(`${this.backendUrl}/generate-array?size=${this.arraySize}`);
             this.array = await response.json();
             this.maxValue = Math.max(...this.array);
             this.steps = [];
@@ -89,7 +91,7 @@ class SortingVisualizer {
         this.updateControls();
         
         try {
-            const response = await fetch('/sort', {
+            const response = await fetch(`${this.backendUrl}/sort`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,14 +102,14 @@ class SortingVisualizer {
                 })
             });
             
-            const data = await response.json();
-            this.steps = data.steps;
-            this.comparisons = data.comparisons;
-            this.swaps = data.swaps;
+            const result = await response.json();
+            this.steps = result.steps;
+            this.comparisons = result.comparisons;
+            this.swaps = result.swaps;
             this.currentStep = 0;
             this.animateSorting();
         } catch (error) {
-            console.error('Error sorting array:', error);
+            console.error('Error during sorting:', error);
             this.isSorting = false;
             this.updateControls();
         }

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
 import random
 from algorithms import (
     BubbleSort, SelectionSort, InsertionSort,
@@ -9,6 +10,7 @@ from algorithms import (
 )
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Create instances of all sorting algorithms
 sorting_algorithms = {
