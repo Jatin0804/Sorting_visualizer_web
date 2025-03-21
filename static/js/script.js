@@ -11,7 +11,6 @@ class SortingVisualizer {
         this.animationTimeout = null;
         this.maxValue = 500; // Maximum value in the array
         this.complexities = {};
-        this.backendUrl = 'http://sorting-visualizer-env.elasticbeanstalk.com';  // Update this with your Elastic Beanstalk URL
         
         // DOM elements
         this.container = document.getElementById('array-container');
@@ -46,7 +45,7 @@ class SortingVisualizer {
     
     async fetchComplexities() {
         try {
-            const response = await fetch(`${this.backendUrl}/complexities`);
+            const response = await fetch('/api/complexities');
             this.complexities = await response.json();
             this.updateComplexityDisplay();
         } catch (error) {
@@ -68,7 +67,7 @@ class SortingVisualizer {
     
     async generateNewArray() {
         try {
-            const response = await fetch(`${this.backendUrl}/generate-array?size=${this.arraySize}`);
+            const response = await fetch(`/api/generate-array?size=${this.arraySize}`);
             this.array = await response.json();
             this.maxValue = Math.max(...this.array);
             this.steps = [];
@@ -91,7 +90,7 @@ class SortingVisualizer {
         this.updateControls();
         
         try {
-            const response = await fetch(`${this.backendUrl}/sort`, {
+            const response = await fetch('/api/sort', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

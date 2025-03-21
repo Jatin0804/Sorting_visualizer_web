@@ -34,13 +34,13 @@ sorting_algorithms = {
 def index():
     return render_template('index.html')
 
-@app.route('/generate-array')
+@app.route('/api/generate-array')
 def generate_array():
     size = int(request.args.get('size', 50))
     array = [random.randint(1, 500) for _ in range(size)]
     return jsonify(array)
 
-@app.route('/sort', methods=['POST'])
+@app.route('/api/sort', methods=['POST'])
 def sort():
     data = request.get_json()
     array = data.get('array', [])
@@ -53,7 +53,7 @@ def sort():
     result = sorter.sort(array.copy())
     return jsonify(result)
 
-@app.route('/complexities')
+@app.route('/api/complexities')
 def get_complexities():
     complexities = {
         name: algorithm.get_complexity()
