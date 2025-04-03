@@ -35,7 +35,7 @@ def index():
 @app.route('/generate-array')
 def generate_array():
     size = int(request.args.get('size', 50))
-    array = [random.randint(1, 500) for _ in range(size)]
+    array = [random.randint(1, 200) for _ in range(size)]
     return jsonify(array)
 
 @app.route('/sort', methods=['POST'])
